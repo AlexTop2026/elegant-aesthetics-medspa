@@ -4,174 +4,686 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Elegant Aesthetics Medical Spa | Franklin, TN</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
+    --cream: #F7EFE6;
+    --paper: #FCF8F2;
     --burgundy: #7D1F2E;
-    --cream: #F5E9DC;
-    --taupe: #C9C0B4;
-    --dark: #2B0E10;
+    --burgundy-deep: #4A1019;
+    --taupe: #C9BFB2;
+    --ink: #2B0E10;
+    --glow: #E8B98A;
   }
+
   * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
   body {
-    font-family: 'Jost', 'Work Sans', Arial, sans-serif;
+    font-family: 'Jost', sans-serif;
     background: var(--cream);
-    color: var(--dark);
-    line-height: 1.6;
+    color: var(--ink);
+    line-height: 1.65;
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
   }
-  header {
-    padding: 2rem 5%;
+
+  h1, h2, h3, .display {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+  }
+
+  .accent {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--burgundy);
+  }
+
+  a { color: inherit; }
+
+  /* ---------- NAV ---------- */
+  .nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: var(--cream);
+    padding: 1.6rem 6%;
+    background: transparent;
+    transition: background 0.4s ease, padding 0.4s ease, box-shadow 0.4s ease;
   }
-  .logo {
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-style: italic;
-    font-size: 1.8rem;
-    color: var(--burgundy);
+  .nav.scrolled {
+    background: rgba(247, 239, 230, 0.92);
+    backdrop-filter: blur(8px);
+    padding: 1rem 6%;
+    box-shadow: 0 1px 0 rgba(43, 14, 16, 0.06);
   }
-  nav a {
-    color: var(--dark);
-    text-decoration: none;
-    margin-left: 2rem;
-    font-size: 0.95rem;
-    letter-spacing: 0.05em;
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    letter-spacing: 0.04em;
   }
-  .hero {
-    min-height: 80vh;
+  .nav-logo .accent { font-size: 1.7rem; }
+  .nav-links {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    gap: 2.5rem;
+    list-style: none;
+    font-size: 0.85rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .nav-links a {
+    text-decoration: none;
+    position: relative;
+    padding-bottom: 4px;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    left: 0; bottom: 0;
+    width: 0; height: 1px;
+    background: var(--burgundy);
+    transition: width 0.3s ease;
+  }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-cta {
+    border: 1px solid var(--burgundy);
+    color: var(--burgundy);
+    padding: 0.55rem 1.4rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+  .nav-cta:hover { background: var(--burgundy); color: var(--cream); }
+  @media (max-width: 800px) {
+    .nav-links { display: none; }
+  }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
     align-items: center;
-    text-align: center;
-    padding: 4rem 5%;
-    background: linear-gradient(180deg, var(--cream) 0%, #ECE0D1 100%);
+    padding: 8rem 6% 4rem;
+    gap: 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-copy { z-index: 2; }
+  .hero-eyebrow {
+    font-size: 0.8rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--burgundy);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.1s forwards;
   }
   .hero h1 {
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: clamp(2.5rem, 8vw, 5rem);
-    font-weight: 500;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    line-height: 1.05;
+    font-weight: 400;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.25s forwards;
+  }
+  .hero h1 .accent { display: block; }
+  .hero-sub {
+    font-size: 1.05rem;
+    max-width: 420px;
+    color: rgba(43, 14, 16, 0.75);
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.4s forwards;
+  }
+  .hero-ctas {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.55s forwards;
+  }
+  .btn-primary {
+    background: var(--burgundy);
+    color: var(--cream);
+    padding: 1rem 2.2rem;
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: background 0.3s ease;
+  }
+  .btn-primary:hover { background: var(--burgundy-deep); }
+  .btn-ghost {
+    border: 1px solid var(--ink);
+    color: var(--ink);
+    padding: 1rem 2.2rem;
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: opacity 0.3s ease;
+  }
+  .btn-ghost:hover { opacity: 0.6; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Glow orb */
+  .hero-visual {
+    position: relative;
+    height: 480px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .glow-orb {
+    width: 380px;
+    height: 380px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, var(--glow) 0%, var(--burgundy) 55%, var(--burgundy-deep) 100%);
+    filter: blur(2px);
+    opacity: 0.9;
+    animation: breathe 8s ease-in-out infinite;
+    box-shadow: 0 40px 120px -20px rgba(125, 31, 46, 0.45);
+  }
+  .glow-ring {
+    position: absolute;
+    width: 460px;
+    height: 460px;
+    border: 1px solid rgba(125, 31, 46, 0.25);
+    border-radius: 50%;
+    animation: spin 60s linear infinite;
+  }
+  .glow-ring::before {
+    content: '';
+    position: absolute;
+    top: -3px; left: 50%;
+    width: 6px; height: 6px;
+    background: var(--glow);
+    border-radius: 50%;
+  }
+  @keyframes breathe {
+    0%, 100% { transform: scale(1); opacity: 0.85; }
+    50% { transform: scale(1.06); opacity: 1; }
+  }
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; text-align: left; padding-top: 7rem; }
+    .hero-visual { height: 320px; order: -1; }
+    .glow-orb { width: 240px; height: 240px; }
+    .glow-ring { width: 300px; height: 300px; }
+  }
+
+  /* ---------- TRUST STRIP ---------- */
+  .trust {
+    background: var(--burgundy);
+    color: var(--cream);
+    text-align: center;
+    padding: 1.1rem 5%;
+    font-size: 0.85rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .trust span { opacity: 0.55; margin: 0 0.6em; }
+
+  /* ---------- SECTION SHELL ---------- */
+  section { padding: 6rem 6%; }
+  .section-head {
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto 3.5rem;
+  }
+  .section-eyebrow {
+    font-size: 0.8rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
     color: var(--burgundy);
     margin-bottom: 1rem;
   }
-  .hero p {
-    font-size: 1.2rem;
-    max-width: 500px;
-    margin-bottom: 2rem;
-    color: var(--dark);
+  .section-head h2 {
+    font-size: clamp(2.2rem, 4.5vw, 3.2rem);
+    font-weight: 400;
   }
-  .cta {
-    background: var(--burgundy);
-    color: var(--cream);
-    border: none;
-    padding: 1rem 2.5rem;
-    font-size: 1rem;
+  .section-head p {
+    margin-top: 1rem;
+    color: rgba(43, 14, 16, 0.7);
+  }
+
+  /* ---------- FACE MAP (signature element) ---------- */
+  .facemap-wrap {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  .facemap-svg { width: 100%; height: auto; }
+  .face-line {
+    fill: none;
+    stroke: var(--ink);
+    stroke-width: 1;
+    opacity: 0.35;
+  }
+  .hotspot circle {
+    fill: var(--burgundy);
+    cursor: pointer;
+    transition: r 0.25s ease, fill 0.25s ease;
+  }
+  .hotspot .pulse {
+    fill: none;
+    stroke: var(--burgundy);
+    stroke-width: 1;
+    opacity: 0.45;
+    transform-origin: center;
+    animation: pulse 2.6s ease-out infinite;
+  }
+  .hotspot:nth-of-type(2) .pulse { animation-delay: 0.4s; }
+  .hotspot:nth-of-type(3) .pulse { animation-delay: 0.8s; }
+  .hotspot:nth-of-type(4) .pulse { animation-delay: 1.2s; }
+  .hotspot:nth-of-type(5) .pulse { animation-delay: 1.6s; }
+  .hotspot:hover circle, .hotspot.active circle { r: 9; fill: var(--glow); }
+  @keyframes pulse {
+    0% { r: 6; opacity: 0.5; }
+    100% { r: 22; opacity: 0; }
+  }
+  .facemap-info {
+    border-left: 1px solid var(--taupe);
+    padding-left: 2.5rem;
+    min-height: 220px;
+  }
+  .facemap-info .tag {
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--burgundy);
+    margin-bottom: 0.8rem;
+    display: block;
+  }
+  .facemap-info h3 {
+    font-size: 2rem;
+    margin-bottom: 0.8rem;
+    transition: opacity 0.3s ease;
+  }
+  .facemap-info p {
+    color: rgba(43, 14, 16, 0.75);
+    max-width: 380px;
+  }
+  .facemap-hint {
+    margin-top: 1.5rem;
+    font-size: 0.8rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    cursor: pointer;
-    text-decoration: none;
-    display: inline-block;
-    transition: opacity 0.2s;
+    color: var(--taupe);
   }
-  .cta:hover { opacity: 0.85; }
-  .trust {
-    text-align: center;
-    padding: 1.5rem;
-    color: var(--burgundy);
-    font-size: 1.1rem;
-    letter-spacing: 0.05em;
+  @media (max-width: 800px) {
+    .facemap-wrap { grid-template-columns: 1fr; gap: 2.5rem; }
+    .facemap-info { border-left: none; border-top: 1px solid var(--taupe); padding-left: 0; padding-top: 2rem; }
   }
-  section {
-    padding: 4rem 5%;
-    max-width: 1100px;
+
+  /* ---------- MENU (services as editorial list) ---------- */
+  .menu {
+    background: var(--paper);
+  }
+  .menu-list {
+    max-width: 820px;
     margin: 0 auto;
   }
-  .section-title {
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 2.5rem;
-    color: var(--burgundy);
-    text-align: center;
-    margin-bottom: 2.5rem;
-  }
-  .services {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  .menu-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
     gap: 2rem;
+    padding: 2.2rem 0;
+    border-bottom: 1px solid var(--taupe);
   }
-  .service-card {
-    background: white;
-    padding: 2rem;
-    border: 1px solid var(--taupe);
+  .menu-item:first-child { border-top: 1px solid var(--taupe); }
+  .menu-item-name {
+    font-size: 1.6rem;
+    white-space: nowrap;
   }
-  .service-card h3 {
-    font-family: 'Cormorant Garamond', Georgia, serif;
+  .menu-item-desc {
+    text-align: right;
+    color: rgba(43, 14, 16, 0.65);
+    font-size: 0.95rem;
+    max-width: 380px;
+  }
+  @media (max-width: 700px) {
+    .menu-item { flex-direction: column; gap: 0.5rem; }
+    .menu-item-desc { text-align: left; }
+  }
+
+  /* ---------- ABOUT ---------- */
+  .about {
+    max-width: 760px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .about-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.4;
     color: var(--burgundy);
-    margin-bottom: 0.5rem;
-    font-size: 1.4rem;
+    margin-bottom: 1.5rem;
   }
-  footer {
-    background: var(--dark);
+  .about-byline {
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .about-byline span {
+    display: block;
+    margin-top: 0.3rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    color: rgba(43, 14, 16, 0.55);
+    text-transform: none;
+  }
+
+  /* ---------- BOOKING CTA ---------- */
+  .cta-band {
+    background: var(--burgundy-deep);
     color: var(--cream);
     text-align: center;
-    padding: 3rem 5%;
+    padding: 6rem 6%;
   }
-  footer .logo { color: var(--cream); }
-  footer p { margin: 0.5rem 0; font-size: 0.95rem; opacity: 0.85; }
+  .cta-band h2 {
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: 400;
+    margin-bottom: 1.2rem;
+  }
+  .cta-band p {
+    color: rgba(247, 239, 230, 0.7);
+    margin-bottom: 2.2rem;
+  }
+  .cta-band .btn-primary {
+    background: var(--cream);
+    color: var(--burgundy-deep);
+  }
+  .cta-band .btn-primary:hover { background: var(--glow); }
+
+  /* ---------- FOOTER ---------- */
+  footer {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 4rem 6% 2rem;
+  }
+  .footer-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 2.5rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid rgba(247, 239, 230, 0.12);
+  }
+  .footer-grid .nav-logo { color: var(--cream); margin-bottom: 1rem; display: block; }
+  .footer-grid p, .footer-grid a {
+    font-size: 0.9rem;
+    color: rgba(247, 239, 230, 0.65);
+    text-decoration: none;
+    line-height: 1.9;
+  }
+  .footer-col h4 {
+    font-size: 0.78rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--glow);
+    margin-bottom: 1rem;
+    font-family: 'Jost', sans-serif;
+    font-weight: 400;
+  }
+  .footer-bottom {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding-top: 1.5rem;
+    font-size: 0.78rem;
+    color: rgba(247, 239, 230, 0.4);
+    letter-spacing: 0.05em;
+  }
+  @media (max-width: 800px) {
+    .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+  }
+
+  /* ---------- SCROLL REVEAL ---------- */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+    .reveal { opacity: 1; transform: none; }
+  }
 </style>
 </head>
 <body>
-  <header>
-    <div class="logo">Elegant Aesthetics</div>
-    <nav>
-      <a href="#services">Services</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </header>
 
-  <div class="hero">
-    <h1>Elegant Aesthetics</h1>
-    <p>Refined medical aesthetics in the heart of Franklin, Tennessee — injectables, RF microneedling, weight loss, and more under the care of Jamie Neumaier, APRN.</p>
-    <a href="#contact" class="cta">Book a Consultation</a>
+<nav class="nav" id="nav">
+  <div class="nav-logo">Elegant <span class="accent">Aesthetics</span></div>
+  <ul class="nav-links">
+    <li><a href="#treatments">Treatments</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Visit</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Book Now</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" style="padding-top: 8rem;">
+  <div class="hero-copy">
+    <div class="hero-eyebrow">Franklin, Tennessee</div>
+    <h1>Refined,<br><span class="accent">unhurried</span><br>renewal.</h1>
+    <p class="hero-sub">
+      Personalized medical aesthetics led by Jamie Neumaier, APRN —
+      injectables, RF microneedling, weight loss, and hair restoration,
+      designed around your natural features.
+    </p>
+    <div class="hero-ctas">
+      <a href="#contact" class="btn-primary">Book a Consultation</a>
+      <a href="#treatments" class="btn-ghost">Explore Treatments</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="glow-ring"></div>
+    <div class="glow-orb"></div>
+  </div>
+</section>
+
+<!-- TRUST STRIP -->
+<div class="trust">
+  Franklin, TN <span>·</span> APRN-Led <span>·</span> 5.0★ Google Rating <span>·</span> Locally Owned
+</div>
+
+<!-- FACE MAP SIGNATURE SECTION -->
+<section id="treatments">
+  <div class="section-head reveal">
+    <div class="section-eyebrow">Where to begin</div>
+    <h2>Tell us where you'd like to focus.</h2>
+    <p>Every face is different — explore by area to see which treatment fits your goals.</p>
   </div>
 
-  <div class="trust">★★★★★ — Trusted by clients across Franklin, TN</div>
+  <div class="facemap-wrap reveal">
+    <svg class="facemap-svg" viewBox="0 0 400 520" xmlns="http://www.w3.org/2000/svg">
+      <!-- face outline -->
+      <path class="face-line" d="M200 40 C 120 40, 75 110, 75 200 C 75 300, 110 410, 200 480 C 290 410, 325 300, 325 200 C 325 110, 280 40, 200 40 Z"/>
+      <!-- hairline -->
+      <path class="face-line" d="M105 130 C 140 90, 170 75, 200 75 C 230 75, 260 90, 295 130"/>
+      <!-- eyes -->
+      <path class="face-line" d="M125 205 C 138 195, 158 195, 172 205"/>
+      <path class="face-line" d="M228 205 C 242 195, 262 195, 275 205"/>
+      <!-- nose -->
+      <path class="face-line" d="M195 215 C 188 245, 182 265, 195 280 C 200 283, 205 283, 210 280"/>
+      <!-- lips -->
+      <path class="face-line" d="M168 325 C 185 318, 215 318, 232 325 C 215 338, 185 338, 168 325 Z"/>
+      <!-- jaw shading hint -->
+      <path class="face-line" d="M115 330 C 125 380, 160 430, 200 460"/>
+      <path class="face-line" d="M285 330 C 275 380, 240 430, 200 460"/>
 
-  <section id="services">
-    <h2 class="section-title">Services</h2>
-    <div class="services">
-      <div class="service-card">
-        <h3>Injectables</h3>
-        <p>Neuromodulators and dermal fillers tailored to enhance your natural features.</p>
-      </div>
-      <div class="service-card">
-        <h3>RF Microneedling</h3>
-        <p>Deep RF microneedling to refine texture, tone, and firmness.</p>
-      </div>
-      <div class="service-card">
-        <h3>Medical Weight Loss</h3>
-        <p>Personalized weight-loss programs including weight-loss injections.</p>
-      </div>
-      <div class="service-card">
-        <h3>Hair Restoration</h3>
-        <p>PRP and exosome therapy to support natural hair restoration.</p>
-      </div>
+      <!-- HOTSPOTS -->
+      <g class="hotspot" data-title="Hair Restoration" data-desc="PRP and exosome therapy to support natural, fuller-looking hair along the hairline and crown.">
+        <circle class="pulse" cx="200" cy="75" r="6"/>
+        <circle cx="200" cy="75" r="6"/>
+      </g>
+      <g class="hotspot" data-title="Injectables" data-desc="Neuromodulators smooth fine lines across the forehead and brow for a refreshed, natural look.">
+        <circle class="pulse" cx="200" cy="140" r="6"/>
+        <circle cx="200" cy="140" r="6"/>
+      </g>
+      <g class="hotspot" data-title="RF Microneedling" data-desc="Deep radiofrequency microneedling refines texture, tone, and firmness across the cheeks and mid-face.">
+        <circle class="pulse" cx="265" cy="235" r="6"/>
+        <circle cx="265" cy="235" r="6"/>
+      </g>
+      <g class="hotspot" data-title="Lip &amp; Dermal Filler" data-desc="Subtle volume and definition for the lips, designed to enhance — never overdo — your natural shape.">
+        <circle class="pulse" cx="200" cy="330" r="6"/>
+        <circle cx="200" cy="330" r="6"/>
+      </g>
+      <g class="hotspot" data-title="Medical Weight Loss" data-desc="Personalized weight-loss programs, including medical weight-loss injections, to support your goals from the inside out.">
+        <circle class="pulse" cx="200" cy="450" r="6"/>
+        <circle cx="200" cy="450" r="6"/>
+      </g>
+    </svg>
+
+    <div class="facemap-info">
+      <span class="tag">Select an area</span>
+      <h3 id="fm-title">Your face, your plan</h3>
+      <p id="fm-desc">Tap or hover any point on the diagram to see how we can help — from hairline to jawline, every treatment is tailored to you.</p>
+      <div class="facemap-hint">← Hover or tap a point</div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section id="about">
-    <h2 class="section-title">About Elegant Aesthetics</h2>
-    <p style="text-align:center; max-width: 700px; margin: 0 auto;">
-      Located in the heart of Franklin, Tennessee, Elegant Aesthetics is led by Jamie Neumaier, APRN — bringing a refined, personalized approach to medical aesthetics and wellness. Every treatment plan is built around your individual goals, with an emphasis on safe, natural-looking results.
+<!-- THE MENU -->
+<section class="menu">
+  <div class="section-head reveal">
+    <div class="section-eyebrow">The Menu</div>
+    <h2>Treatments, in full.</h2>
+  </div>
+  <div class="menu-list reveal">
+    <div class="menu-item">
+      <div class="menu-item-name">Injectables</div>
+      <div class="menu-item-desc">Neuromodulators and dermal fillers tailored to enhance your natural features.</div>
+    </div>
+    <div class="menu-item">
+      <div class="menu-item-name">RF Microneedling</div>
+      <div class="menu-item-desc">Deep radiofrequency microneedling to refine texture, tone, and firmness.</div>
+    </div>
+    <div class="menu-item">
+      <div class="menu-item-name">Medical Weight Loss</div>
+      <div class="menu-item-desc">Personalized programs, including medical weight-loss injections.</div>
+    </div>
+    <div class="menu-item">
+      <div class="menu-item-name">Hair Restoration</div>
+      <div class="menu-item-desc">PRP and exosome therapy to support natural, fuller-looking hair.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about reveal">
+    <div class="section-eyebrow" style="text-align:center;">About Elegant Aesthetics</div>
+    <p class="about-quote">
+      "Every treatment plan starts with a conversation — what you'd like to
+      feel, not just how you'd like to look. My approach is careful,
+      conservative, and built around results that look like you, only
+      rested."
     </p>
-  </section>
+    <div class="about-byline">
+      Jamie Neumaier, APRN
+      <span>Founder &amp; Lead Provider, Elegant Aesthetics — Franklin, TN</span>
+    </div>
+  </div>
+</section>
 
-  <footer id="contact">
-    <div class="logo">Elegant Aesthetics</div>
-    <p>214 2nd Ave S, Franklin, TN 37064</p>
-    <p>(615) 795-1123</p>
-    <p>elegantaestheticsmedspa@gmail.com</p>
-  </footer>
+<!-- BOOKING CTA -->
+<div class="cta-band reveal" id="contact">
+  <h2>Begin with a conversation.</h2>
+  <p>Consultations are unhurried, honest, and built around your goals.</p>
+  <a href="tel:6157951123" class="btn-primary">Call (615) 795-1123</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <span class="nav-logo">Elegant <span class="accent" style="color: var(--glow);">Aesthetics</span></span>
+      <p>214 2nd Ave S<br>Franklin, TN 37064</p>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <p><a href="tel:6157951123">(615) 795-1123</a></p>
+      <p><a href="mailto:elegantaestheticsmedspa@gmail.com">elegantaestheticsmedspa@gmail.com</a></p>
+    </div>
+    <div class="footer-col">
+      <h4>Follow</h4>
+      <p><a href="https://instagram.com/elegant_aesthetics_medspa" target="_blank">@elegant_aesthetics_medspa</a></p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © Elegant Aesthetics Medical Spa — Franklin, TN
+  </div>
+</footer>
+
+<script>
+  // Nav background on scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 40) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.15 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Face map interactivity
+  const hotspots = document.querySelectorAll('.hotspot');
+  const fmTitle = document.getElementById('fm-title');
+  const fmDesc = document.getElementById('fm-desc');
+
+  function activate(spot) {
+    hotspots.forEach(h => h.classList.remove('active'));
+    spot.classList.add('active');
+    fmTitle.style.opacity = 0;
+    setTimeout(() => {
+      fmTitle.textContent = spot.dataset.title;
+      fmDesc.textContent = spot.dataset.desc;
+      fmTitle.style.opacity = 1;
+    }, 150);
+  }
+
+  hotspots.forEach(spot => {
+    spot.addEventListener('mouseenter', () => activate(spot));
+    spot.addEventListener('click', () => activate(spot));
+  });
+</script>
+
 </body>
 </html>
